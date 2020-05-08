@@ -22,26 +22,26 @@ export default function Movie({ navigation }) {
 
   async function getMovies() {
     setLoading(true);
-    const a = await store.get("movies-evelyn");
+    const a = await store.get('movies-evelyn');
 
     if (a) {
-      const wahtched = a.filter((item) => (item.type == 1));
-      const notWatched = a.filter((item) => (item.type == 2));
+      const wahtched = a.filter((item) => item.type == 1);
+      const notWatched = a.filter((item) => item.type == 2);
 
       wahtched.sort((a, b) =>
         Number(a.avaliation) < Number(b.avaliation)
           ? 1
           : Number(b.avaliation) < Number(a.avaliation)
-            ? -1
-            : 0,
+          ? -1
+          : 0
       );
 
       notWatched.sort((a, b) =>
         Number(a.avaliation) < Number(b.avaliation)
           ? 1
           : Number(b.avaliation) < Number(a.avaliation)
-            ? -1
-            : 0,
+          ? -1
+          : 0
       );
 
       setMoviesWatched(wahtched);
@@ -60,15 +60,45 @@ export default function Movie({ navigation }) {
     navigation.setParams({
       getMovies: () => getMovies(),
     });
-  }, [])
+  }, []);
 
   return (
-    <Tabs tabBarUnderlineStyle={{ backgroundColor: "#fff" }}>
-      <Tab heading="FALTA ASSISTIR" tabStyle={{ backgroundColor: colors.primary }} textStyle={{ fontFamily: 'Quicksand-Bold', color: '#fff' }} activeTabStyle={{ backgroundColor: colors.primary }} activeTextStyle={{ fontFamily: 'Quicksand-Bold', color: '#fff', fontWeight: 'normal' }}>
-        <Tab1 setLoading={setLoading} setMovies={setMoviesNotWatched} loading={loading} moviesAll={moviesNotWatchedAll} movies={moviesNotWatched} />
+    <Tabs tabBarUnderlineStyle={{ backgroundColor: '#fff' }}>
+      <Tab
+        heading="FALTA ASSISTIR"
+        tabStyle={{ backgroundColor: colors.primary }}
+        textStyle={{ fontFamily: 'Quicksand-Regular', color: '#fff' }}
+        activeTabStyle={{ backgroundColor: colors.primary }}
+        activeTextStyle={{
+          fontFamily: 'Quicksand-Bold',
+          color: '#fff',
+        }}
+      >
+        <Tab1
+          setLoading={setLoading}
+          setMovies={setMoviesNotWatched}
+          loading={loading}
+          moviesAll={moviesNotWatchedAll}
+          movies={moviesNotWatched}
+        />
       </Tab>
-      <Tab heading="JÁ ASSISTIDO" tabStyle={{ backgroundColor: colors.primary }} textStyle={{ fontFamily: 'Quicksand-Bold', color: '#fff' }} activeTabStyle={{ backgroundColor: colors.primary }} activeTextStyle={{ fontFamily: 'Quicksand-Bold', color: '#fff', fontWeight: 'normal' }}>
-        <Tab2 setLoading={setLoading} setMovies={setMoviesWatched} loading={loading} moviesAll={moviesWatchedAll} movies={moviesWatched} />
+      <Tab
+        heading="JÁ ASSISTIDO"
+        tabStyle={{ backgroundColor: colors.primary }}
+        textStyle={{ fontFamily: 'Quicksand-Regular', color: '#fff' }}
+        activeTabStyle={{ backgroundColor: colors.primary }}
+        activeTextStyle={{
+          fontFamily: 'Quicksand-Bold',
+          color: '#fff',
+        }}
+      >
+        <Tab2
+          setLoading={setLoading}
+          setMovies={setMoviesWatched}
+          loading={loading}
+          moviesAll={moviesWatchedAll}
+          movies={moviesWatched}
+        />
       </Tab>
     </Tabs>
   );
@@ -78,23 +108,13 @@ Movie.navigationOptions = ({ navigation }) => {
   return {
     headerLeft: (
       <TouchableOpacity onPress={() => navigation.state.params.getMovies()}>
-        <Icon
-          style={{ marginLeft: 10 }}
-          name="reload"
-          size={30}
-          color="#fff"
-        />
+        <Icon style={{ marginLeft: 10 }} name="reload" size={30} color="#fff" />
       </TouchableOpacity>
     ),
     headerRight: (
-      <TouchableOpacity onPress={() => navigation.navigate("NewMovie")}>
-        <Icon
-          style={{ marginRight: 10 }}
-          name="plus"
-          size={30}
-          color="#fff"
-        />
+      <TouchableOpacity onPress={() => navigation.navigate('NewMovie')}>
+        <Icon style={{ marginRight: 10 }} name="plus" size={30} color="#fff" />
       </TouchableOpacity>
-    )
-  }
-}
+    ),
+  };
+};
